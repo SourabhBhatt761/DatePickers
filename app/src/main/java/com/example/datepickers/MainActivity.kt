@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener{
     private val binding get() = _binding
     private lateinit var datePicker: DatePicker
     private lateinit var date: Date
-    private val monthList = listOf<String>(
+    private val monthList = listOf(
         "Jan",
         "Feb",
         "Mar",
@@ -162,11 +162,30 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener{
             //build the date picker
             val builder = MaterialDatePicker.Builder.dateRangePicker()
             builder.setSelection(Pair(MaterialDatePicker.thisMonthInUtcMilliseconds(),MaterialDatePicker.todayInUtcMilliseconds()))
+
+            restrictUserToClickOnDatesRangePicker(builder)
             val picker = builder.build()
+
             picker.isCancelable = false                 //sticky
             picker.show(supportFragmentManager,"testing")
 
+
+            picker.addOnPositiveButtonClickListener {
+                val date = it
+                val startDate = date.first
+                val endDate = date.second
+
+                binding.dateTv.text = "start date: ${sdf.format(startDate)}   \nend date: ${sdf.format(endDate)}"
+            }
+
         }
+
+    }
+
+    private fun restrictUserToClickOnDatesRangePicker(builder: MaterialDatePicker.Builder<Pair<Long, Long>>) {
+        val constraintsBuilder = CalendarConstraints.Builder()
+        constraintsBuilder.setValidator(WeekDayValidator(MaterialDatePicker.todayInUtcMilliseconds()))
+        builder.setCalendarConstraints(constraintsBuilder.build())
 
     }
 

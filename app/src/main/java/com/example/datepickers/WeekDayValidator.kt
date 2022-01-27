@@ -38,7 +38,7 @@ class WeekDayValidator() : CalendarConstraints.DateValidator {
         utc.timeInMillis = date
         val dayOfWeek = utc[Calendar.DAY_OF_WEEK]
 //        return dayOfWeek != Calendar.SATURDAY && dayOfWeek != Calendar.SUNDAY
-        return date < point
+        return date <= point
     }
 
 
