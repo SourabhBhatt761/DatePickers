@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener{
             /*convert date to string*/
             val sdf2 = SimpleDateFormat("dd MMMM yyyy hh:mm:ss aa", Locale.getDefault())
 
-            val handler = Handler()
+            val handler = Handler(mainLooper)
             handler.postDelayed({
                 binding.dateTv.text = sdf2.format(dateToPrint)
             }, 3000)
@@ -111,7 +111,6 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener{
 
             //build the date picker
             val builder = MaterialDatePicker.Builder.datePicker()
-            //todo : 12:16 a.m. actual date-> 28/01/2022        set date-> 27/01/2022 wtf why?
             builder.setSelection(MaterialDatePicker.todayInUtcMilliseconds())
 
             //display the picker
@@ -125,7 +124,6 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener{
             //build the date picker
             val builder = MaterialDatePicker.Builder.datePicker()
             builder.setSelection(Calendar.getInstance().timeInMillis)
-
             restrictUserToClickOnDates(builder)
 
             //display the picker
@@ -179,6 +177,40 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener{
             }
 
         }
+
+
+        binding.materialDatePicker3.setOnClickListener {
+
+            //build the date picker
+            val builder = MaterialDatePicker.Builder.datePicker()
+            builder.setSelection(getBirthdayDate())
+
+            val picker = builder.build()
+            picker.show(supportFragmentManager,"testing")
+
+        }
+
+
+        binding.materialDatePicker4.setOnClickListener {
+
+            //build the date picker
+            val builder = MaterialDatePicker.Builder.datePicker()
+            builder.setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+            builder.setTheme(R.style.ThemeOverlay_App_MaterialDatePicker)
+
+            val picker = builder.build()
+            picker.show(supportFragmentManager,"testing")
+
+        }
+
+
+    }
+
+    private fun getBirthdayDate(): Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(1999,4,5)
+        calendar.firstDayOfWeek = Calendar.WEDNESDAY
+        return  calendar.timeInMillis
 
     }
 
