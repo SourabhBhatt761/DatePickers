@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener{
 //        constraintsBuilder.setStart(calendar.timeInMillis)
 //        calendar.roll(Calendar.MONTH, 4)                        //user can swipe till next 4 months
 //        calendar.roll(Calendar.YEAR, 1)                        //user can swipe till next 1 year
-//        constraintsBuilder.setValidator(DateValidatorPointForward.now())  //best approach to block user to select previous dates
+//        constraintsBuilder.setValidator(DateValidatorPointForward.now())  //best approach to block user to select old dates
 //        constraintsBuilder.setValidator(DateValidatorPointBackward.now())  //best approach to block user to select coming dates
         constraintsBuilder.setValidator(WeekDayValidator(calendar.timeInMillis))         //CUSTOM CLASS TO RESTRICT USER !
 //        constraintsBuilder.setEnd(calendar.timeInMillis)
